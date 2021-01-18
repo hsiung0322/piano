@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Piano</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div id="app">
+  <div class="audioplayer" v-for="s in sounddata">
+    <audio v-bind:data-num="s.num">
+      <source v-bind:src="s.url"/>
+    </audio>
+  </div>
+  <div class="center_box">
+    <h2>Piano</h2>
+    <div class="keyboard">
+      <div class="piano_key" v-for="key in display_keys">
+        <div class="white" v-if="key.type==&quot;white&quot;" v-on:click="addnote(key.num)" v-bind:class="get_cur_note(key.num,key.key)?&quot;playing&quot;:&quot;&quot;">
+          <div class="label">{{String.fromCharCode(key.key)}}</div>
+        </div>
+        <div class="black" v-if="key.type==&quot;black&quot;" v-on:click="addnote(key.num)" v-bind:class="get_cur_note(key.num,key.key)?&quot;playing&quot;:&quot;&quot;">
+          <div class="label">{{String.fromCharCode(key.key)}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <ul class="notes_list" v-if="notes.length&gt;0">
+        <li v-for="(n,id) in notes" v-bind:class="now_note_id-1==id?&quot;playing&quot;:&quot;&quot;">
+          <div class="num">{{n.num}}</div>
+          <div class="time">{{n.time}}</div>
+        </li>
+      </ul>
+      <button v-on:click="loadsample">Sample</button>
+      <button v-on:click="playnext(1)">PlayNext</button>
+      <button v-if="playing_time&lt;=1" v-on:click="startplay">StartPlay</button>
+      <button v-if="playing_time&gt;1" v-on:click="stopplay">StopPlay</button>
+      <button v-if="record_time&lt;=1" v-on:click="record">Record</button>
+      <button v-if="record_time&gt;1" v-on:click="stoprecord">StopRecord</button>
+      <button v-on:click="notes=[]">Clear</button>
+      <h4>{{playing_time+record_time}}</h4>
+    </div>
+  </div>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.8/vue.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>

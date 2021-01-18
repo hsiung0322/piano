@@ -1,0 +1,81 @@
+$color_white: #eee
+$color_black: #585858
+$key_width: 44px
+$key_height: 300px
+
+@mixin size($w,$h)
+  width: $w
+  height: $h
+*
+  vertical-align: top
+
+html,body
+  +size(100%,100%)
+  margin: 0
+.center_box
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%,-50%)
+  width: 100%
+  text-align: center
+.keyboard
+  margin-bottom: 30px
+  box-shadow: 0px 0px 40px -5px rgba(0,0,0,0.4)
+  display: inline-block
+  cursor: pointer
+.piano_key
+  display: inline-block
+  position: relative
+.white.playing
+  background-color: darken($color_white,5)
+  
+.black.playing
+  background-color: #777
+  
+.white
+  +size($key_width,$key_height)
+  border: solid 1px $color_white
+  // transform: translate(0px,-3px)
+  cursor: pointer
+  &:hover
+    background-color: darken($color_white,5)
+    // transform: translate(0px,0px)
+.black
+  width: $key_width/2
+  height: $key_height*0.55
+  background-color: $color_black
+  //黑建置於白鍵中，margin左右各減半
+  margin-left: -$key_width/4
+  margin-right: -$key_width/2
+  //讓黑鍵至於白鍵上
+  position: absolute
+  z-index: 10
+  //
+  cursor: pointer
+  // transform: translate(0px,-3px)
+  &:hover
+    background-color: darken($color_black,5)
+    // transform: translate(0px,0px)
+.label
+  position: absolute
+  bottom: -25px
+  left: 50%
+  transform: translateX(-50%)
+  color: $color_black
+  
+.notes_list
+  li
+    display: inline-block
+    border-right: solid 1px $color_black
+    padding: 2px 5px
+    cursor: pointer
+    &:hover
+      background-color: #ccc
+    &.playing
+      background-color: #ccc
+    .time
+      font-size: 8px
+      opacity: 0.3
+    .num
+      font-size: 16px

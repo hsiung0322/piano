@@ -1,0 +1,31 @@
+#app
+  .audioplayer(v-for="s in sounddata")
+      //- label {{s.num}}
+      audio(v-bind:data-num="s.num")
+        source(v-bind:src="s.url")
+  .center_box
+    h2 Piano
+    .keyboard
+      .piano_key(v-for="key in display_keys")
+        .white(v-if="key.type==\"white\""
+               v-on:click='addnote(key.num)'
+               v-bind:class='get_cur_note(key.num,key.key)?"playing":""')
+          .label {{String.fromCharCode(key.key)}}
+        .black(v-if="key.type==\"black\""
+               v-on:click='addnote(key.num)'
+               v-bind:class='get_cur_note(key.num,key.key)?"playing":""')
+          .label {{String.fromCharCode(key.key)}}
+    .controls
+      ul.notes_list(v-if="notes.length>0")
+        li(v-for="(n,id) in notes"
+          v-bind:class='now_note_id-1==id?"playing":""')
+          .num {{n.num}}
+          .time {{n.time}}
+      button(v-on:click="loadsample") Sample
+      button(v-on:click="playnext(1)") PlayNext
+      button(v-if="playing_time<=1" v-on:click="startplay") StartPlay
+      button(v-if="playing_time>1" v-on:click="stopplay") StopPlay
+      button(v-if="record_time<=1" v-on:click="record") Record
+      button(v-if="record_time>1" v-on:click="stoprecord") StopRecord
+      button(v-on:click="notes=[]") Clear
+      h4 {{playing_time+record_time}}
